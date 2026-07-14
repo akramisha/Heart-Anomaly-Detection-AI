@@ -39,8 +39,10 @@ The project combines machine learning with a user-friendly web interface, allowi
 ```
 Heart-Anomaly-Detection/
 │
-├── assisstant_ai/
-├── reservation/
+├── app/
+├── ecg_images/
+├── media/
+├── myproject/
 ├── static/
 ├── templates/
 ├── manage.py
