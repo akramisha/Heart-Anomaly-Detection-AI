@@ -1,0 +1,84 @@
+{% block content %}
+<style>
+/* General Page Styles */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background: #f8f9fa;
+    font-weight: bold;
+}
+
+.table tbody tr:hover {
+    background: #f1f1f1;
+}
+
+.text-muted {
+    color: #888;
+    font-style: italic;
+}
+</style>
+
+<div class="container mt-4">
+    <h2><i class="fas fa-envelope"></i> Your Messages</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Admin Reply</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.message }}</td>
+                <td>
+                    {% if message.admin_reply %}
+                        {{ message.admin_reply }}
+                    {% else %}
+                        <span class="text-muted">No reply yet</span>
+                    {% endif %}
+                </td>
+                <td>{{ message.created_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No messages found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

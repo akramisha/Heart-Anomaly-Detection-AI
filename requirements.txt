@@ -1,0 +1,7 @@
+Django==6.0.7
+keras==3.10.0
+keras==3.12.3
+numpy==2.5.1
+reportlab==4.4.2
+tensorflow==2.19.0
+tensorflow==2.21.0

@@ -1,0 +1,494 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Add your CSS here if you don't have an external file linked */
+        /* Basic styles to make it look decent and align with previous outputs */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 280px;
+            background-color: #1acc8d;
+            color: white;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .user-profile-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .default-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: #666;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .nav-menu {
+            flex-grow: 1;
+            padding: 20px 0;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px; /* Adjusted padding to match profile.html */
+            color: white;
+            text-decoration: none;
+            font-size: 1em; /* Adjusted font-size to match profile.html */
+            transition: background-color 0.3s ease;
+        }
+         .nav-item:hover {
+            background-color: #ffffff1a;
+        }
+
+        .nav-item.active {
+            background-color:#ffffff1a;
+        }
+        
+        .nav-item i {
+            margin-right: 12px; /* Adjusted margin to match profile.html */
+            /* Removed font-size to allow it to inherit or match profile.html's size */
+        }
+       .footer-info {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .main-content {
+            margin-left: 280px; /* Offset for the fixed sidebar */
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f0f0f0;
+        }
+        .page-header {
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 2.5em;
+            color: #1acc8d;
+            margin-bottom: 5px;
+        }
+        .page-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .profile-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 25px;
+            border: 4px solid #4e003f;
+        }
+        .default-profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            color: #fff;
+            margin-right: 25px;
+            border: 4px solid #4e003f;
+        }
+        .profile-basic-info h2 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #4e003f;
+        }
+        .profile-basic-info .username {
+            color: #888;
+            font-size: 1em;
+            margin-top: 5px;
+        }
+        .profile-basic-info .email {
+            color: #666;
+            font-size: 1em;
+            margin-top: 5px;
+        }
+
+        /* Form Specific Styles */
+        .form-section {
+            padding-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4e003f;
+        }
+        .input-with-icon {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 12px;
+            background-color: #f9f9f9;
+        }
+        .input-with-icon i {
+            margin-right: 10px;
+            color: #888;
+        }
+        .input-with-icon input[type="text"],
+        .input-with-icon input[type="email"],
+        .input-with-icon input[type="date"],
+        .input-with-icon input[type="tel"],
+        .input-with-icon textarea,
+        .input-with-icon select,
+        .input-with-icon input[type="password"] {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 5px 0;
+            font-size: 1em;
+            background-color: transparent;
+            width: 100%; /* Ensure inputs take full width of container */
+        }
+        .input-with-icon input[type="file"] {
+            padding: 0; /* Adjust padding for file input */
+        }
+        .input-with-icon input::placeholder,
+        .input-with-icon textarea::placeholder {
+            color: #aaa;
+        }
+        .errorlist {
+            color: red;
+            font-size: 0.9em;
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 5px;
+        }
+        .auth-btn {
+            background-color: #1acc8d;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            width: auto;
+            margin-top: 20px;
+        }
+        .auth-btn:hover {
+            background-color: #17a673;
+        }
+        .form-group.profile-picture-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .current-profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #ddd;
+        }
+        
+        /* Message styles */
+        .messages {
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="sidebar">
+        <div class="user-profile-section">
+            <div class="user-profile">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="user-avatar">
+                {% else %}
+                    <div class="default-avatar">{{ user.username|first|upper }}</div>
+                {% endif %}
+                <div class="user-info">
+                    <h3>{{ user.username }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="{% url 'profile' %}" class="nav-item">
+                <i class="fas fa-user"></i>
+                My Profile
+            </a>
+            <a href="{% url 'edit_profile' %}" class="nav-item active">
+                <i class="fas fa-edit"></i>
+                Edit Profile
+            </a>
+            <a href="{% url 'change_password' %}" class="nav-item">
+                <i class="fas fa-key"></i>
+                Change Password
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item">
+                <i class="fa fa-sign-out"></i>
+                logout
+            </a>
+             <a href="{% url 'ai' %}" class="nav-item">
+                <i class="fas fa-brain"></i> 
+                AI Prediction
+            </a>
+            <a href="{% url 'prediction_history' %}" class="nav-item ">
+                <i class="fas fa-history"></i> 
+                Prediction History
+            </a>
+           <a href="{% url 'index' %}" class="nav-item">
+                <i class="fas fa-home"></i> 
+                Home
+            </a>
+        </nav>
+        
+        <div class="footer-info">
+            © 2024 Profile System
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Edit Profile</h1>
+            <p>Update your personal information and password</p>
+        </div>
+
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="profile-card">
+           <form method="POST" enctype="multipart/form-data" action="{% url 'edit_profile' %}" class="edit-profile-form" novalidate>
+                {% csrf_token %}
+                
+                <h2>Personal Information</h2>
+                <div class="form-grid">
+                    <div class="form-group profile-picture-group">
+                        <label>Profile Picture</label>
+                        {% if user.profile.profile_picture %}
+                            <img src="{{ user.profile.profile_picture.url }}" alt="Current Profile Picture" class="current-profile-pic">
+                        {% endif %}
+                        <div class="input-with-icon" style="flex-grow: 1;">
+                            <i class="fas fa-image"></i>
+                            {{ profile_form.profile_picture }}
+                        </div>
+                        {% if profile_form.profile_picture.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.profile_picture.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="{{ profile_form.contact_number.id_for_label }}">Contact Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            {{ profile_form.contact_number }}
+                        </div>
+                        {% if profile_form.contact_number.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.contact_number.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ profile_form.gender.id_for_label }}">Gender</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-venus-mars"></i>
+                            {{ profile_form.gender }}
+                        </div>
+                        {% if profile_form.gender.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.gender.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ profile_form.birth_date.id_for_label }}">Date of Birth</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                            {{ profile_form.birth_date }}
+                        </div>
+                        {% if profile_form.birth_date.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.birth_date.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ profile_form.location.id_for_label }}">Location</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ profile_form.location }}
+                        </div>
+                        {% if profile_form.location.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.location.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ profile_form.education.id_for_label }}">Education</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                            {{ profile_form.education }}
+                        </div>
+                        {% if profile_form.education.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.education.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ profile_form.bio.id_for_label }}">Bio</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-info-circle"></i>
+                            {{ profile_form.bio }}
+                        </div>
+                        {% if profile_form.bio.errors %}
+                            <ul class="errorlist">
+                                {% for error in profile_form.bio.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <button type="submit" class="auth-btn">Save All Changes</button>
+            </form>
+        </div>
+    </main>
+    {% else %}
+    <div style="padding: 20px; text-align: center;">
+        <p>You are not logged in. Please <a href="{% url 'login' %}">login</a> to view and edit your profile.</p>
+    </div>
+    {% endif %}
+
+    <script>
+        // Add some client-side validation feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.edit-profile-form');
+            const submitBtn = document.querySelector('.auth-btn');
+            
+            form.addEventListener('submit', function(e) {
+                submitBtn.textContent = 'Saving...';
+                submitBtn.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>

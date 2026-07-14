@@ -1,0 +1,158 @@
+*,*::before,*::after
+{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:'Inter',sans-serif;}
+    body
+    {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f5f7fa;
+    }
+    .container
+    {
+      background:#fff;
+      width:clamp(320px,90%,1100px);
+      display:flex;
+      border-radius:1rem;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    /* Left illustration */
+    .illustration
+    {
+      flex:1 1 45%;
+      background:url('/static/image/3737510.jpg') center/cover no-repeat;
+      position:relative;
+    }
+    
+    /* Right form */
+    .form-wrapper
+    {flex:1 1 55%;
+    padding:3rem 2.5rem;
+  }
+    h1
+    {font-size:1.8rem;
+      font-weight:600;
+      margin-bottom:1.5rem;
+      color:#1a212f;
+    }
+    form
+    {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1rem 1.5rem;
+    }
+    label
+    {font-size:.875rem;
+      margin-bottom:.25rem;
+      color:#4c5566;
+      display:block;
+    }
+    input,select
+    {
+      width:100%;
+      padding:.65rem .75rem;
+      border:1px solid #d0d5dd;
+      border-radius:.5rem;
+      font-size:.95rem;
+      color:#1a212f;
+      background:#fff;
+    }
+    input:focus,select:focus
+    {
+      outline:2px solid #1acc8d;
+      border-color:#1acc8d;
+    }
+    .full-span{
+      grid-column:1/-1;
+    }
+    .gender-group
+    {display:flex;
+      align-items:center;
+      gap:1rem;
+      color: #1acc8d;
+    }
+    .gender-group input
+    {
+      width:auto;
+      margin-right:.35rem;
+      color: #1acc8d;
+    }
+    .btn
+    {
+      grid-column:1/-1;
+      margin-top:1rem;
+      padding:.9rem;
+      border:none;
+      border-radius:2rem;
+      background:#1acc8d;
+      color:#fff;
+      font-size:1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .25s;
+    }
+    .btn:hover
+    {
+      background:#1acc8d;
+    }
+    @media(max-width:768px){
+      .container{flex-direction:column;}
+      .illustration{height:220px;}
+    }
+
+  textarea {
+  height: 40px;
+  resize: vertical;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #d0d5dd;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-height: 100px;
+}
+
+ .password-group {
+    display: flex; /* Use flexbox to put children side-by-side */
+    gap: 1.5rem; /* Space between the two password input groups */
+    margin-bottom: 1.5rem; /* Space below the password group */
+}
+
+.password-group > div {
+    flex: 1; /* Each password field container takes equal space */
+}
+
+/* New CSS for password instruction box */
+.password-instructions {
+    background-color: #f8f9fa; /* Light background for the box */
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid #1acc8d; /* Highlight border on the left */
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-top: 10px; /* Space above the instruction box */
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1.4;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.password-instructions p {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.password-instructions ul {
+    list-style-type: disc; /* Use bullets */
+    margin-left: 20px; /* Indent the list */
+    padding-left: 0;
+}
+
+.password-instructions ul li {
+    margin-bottom: 4px;
+}
+

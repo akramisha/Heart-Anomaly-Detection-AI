@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+
+  {% load static %}
+<html lang="en">
+
+    <head>
+        <style>
+        .message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .copyright p{
+            color: white;
+        }
+        
+    </style>
+        <meta charset="utf-8">
+        <title>HDD.
+        {% block title %}
+            {% endblock title %}
+
+        </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="{% static 'css/css/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+        <!-- AOS CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+
+ <!-- Libraries Stylesheet -->
+        <link href=" {% static 'css/css/lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href=" {% static 'css/css/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+        <link href=" {% static 'css/css/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!--  Stylesheet -->
+        <link href="{% static 'css/css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/css/main.css' %}" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs"></script>
+        
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    </head>
+
+    <body>
+{% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function() {
+                const messageContainer = document.querySelector('.message-container');
+                if (messageContainer) {
+                    messageContainer.style.display = 'none';
+                }
+            }, 3000); // 3000 milliseconds = 3 seconds
+        </script>
+    {% endif %}
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Topbar Start -->
+        <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
+            <div class="row gx-0 align-items-center">
+                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                    <div class="d-flex flex-wrap">
+                        <a href="https://www.google.com/maps/search/heart+specialist+near+me/" target="_blank" class="text-muted small me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                        <a href="tel:+01234567890" class="text-muted small me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                        <a href="mailto:example@gmail.com" class="text-muted small me-0"><i class="fas fa-envelope text-primary me-2"></i>HDD@gmail.com</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                         {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle text-dark" data-bs-toggle="dropdown"><small><i class="fa fa-home text-primary me-2"></i> My Dashboard</small></a>
+                            <div class="dropdown">
+{% else %}
+                                <a href="/register"><small class="me-3 text-dark"><i class="fa fa-user text-primary me-2"></i>Register</small></a>
+                        <a href="/login"><small class="me-3 text-dark"><i class="fa fa-sign-in-alt text-primary me-2"></i>Login</small></a>
+                        {% endif %} 
+<!--    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--        Menu-->
+<!--    </button>-->
+    <ul class="dropdown-menu rounded" aria-labelledby="dropdownMenuButton">
+        <li><a href="{% url 'profile' %}" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> My Profile</a></li>
+
+
+    </ul>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar End -->
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    
+                    <h1 class="text-primary"><img src="{%static 'image/img/logo copy HDD.png' %}" alt="Logo"> HDD.</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="/" class="nav-item nav-link active">Home</a>
+                        <a href="/about" class="nav-item nav-link">About</a>
+
+                        <a href="/service" class="nav-item nav-link">Services</a>
+                        <a href="/ai" class="nav-item nav-link">AI-Prediction</a>
+                        <a href="/contact" class="nav-item nav-link">Contact Us</a>
+
+                    </div>
+
+                    <a href="/ai" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0" id="getStartedBtn">Get Started</a>
+                </div>
+            </nav>
+
+            <!-- Carousel Start -->
+            <div class="header-carousel owl-carousel">
+                <div class="header-carousel-item">
+                    <img src="{% static 'image/img/team-healthcare-experts-examining-xray-image-medical-clinic.jpg' %}" class="img-fluid w-100" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="container">
+                            <div class="row gy-0 gx-5">
+                                <div class="col-lg-0 col-xl-5"></div>
+                                <div class="col-xl-7 animated fadeInLeft">
+                                    <div class="text-sm-center text-md-end">
+                                        <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome To HDD.</h4>
+                                        <h1 class="display-4 text-uppercase text-white mb-4">WE CARE ABOUT YOUR HEALTH</h1>
+                                        <p class="mb-5 fs-5">"Innovative care for a better tomorrow"
+                                        </p>
+                                        <div class="d-flex justify-content-center justify-content-md-end flex-shrink-0 mb-4">
+                                            <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="https://youtu.be/3_PYnWVoUzM?si=AIuADxH0kka6iHls"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
+                                            <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="/about">Learn More</a>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                                            <h2 class="text-white me-2">Follow Us:</h2>
+                                            <div class="d-flex justify-content-end ms-2">
+                                                <a class="btn btn-md-square btn-light rounded-circle me-2" href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle mx-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle mx-2" href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle ms-2" href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-carousel-item">
+                    <img src="{% static 'image/doctor.jpg' %}" class="img-fluid w-100" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="container">
+                            <div class="row g-5">
+                                <div class="col-12 animated fadeInUp">
+                                    <div class="text-center">
+                                        <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome To HDD.</h4>
+                                        <h1 class="display-4 text-uppercase text-white mb-4">YOUR HEALTH, OUR PRIORITY</h1>
+                                        <p class="mb-5 fs-5">"Taking care of you, every step of the way"
+                                        </p>
+                                        <div class="d-flex justify-content-center flex-shrink-0 mb-4">
+                                            <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="https://www.youtube.com/watch?v=Y7f98aduVJ8"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
+                                            <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="/about">Learn More</a>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <h2 class="text-white me-2">Follow Us:</h2>
+                                            <div class="d-flex justify-content-end ms-2">
+                                               <a class="btn btn-md-square btn-light rounded-circle me-2" href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle mx-2" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle mx-2" href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                                                <a class="btn btn-md-square btn-light rounded-circle ms-2" href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel End -->
+        </div>
+        <!-- Navbar & Hero End -->
+         <!-- Abvout Start -->
+        <div class="container-fluid about py-5">
+            <div class="container py-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-xl-7 wow fadeInLeft" data-wow-delay="0.2s">
+                        <div>
+                            <h4 class="text-primary">About Us</h4>
+                            <h1 class="display-5 mb-4">AI-Powered Heart Disease Prediction</h1>
+                            <p class="mb-4">We use AI to predict heart disease by analyzing ECG data. Our goal is to help people detect heart issues early and take action to stay healthy.With our intuitive interface, you can easily upload ECG data and receive instant predictions on heart disease risk.
+                            </p>
+                            <div class="row g-4">
+                           
+                                
+                                <div class="col-sm-6">
+                                    <a href="/about" class="btn btn-primary rounded-pill py-3 px-5 flex-shrink-0">Discover Now</a>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 wow fadeInRight" data-wow-delay="0.2s">
+                        <div class="bg-primary rounded position-relative overflow-hidden">
+                            <img src="{%static 'image/img/doctor-from-future-concept.jpg'%}" class="img-fluid rounded w-100" alt="">
+                            
+                          
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+ 
+      
+            <!-- Stats Section -->
+    <section id="stats" class="stats section light-background">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+              <i class="bi bi-emoji-smile"></i>
+              <div class="stats-item">
+                <span data-purecounter-start="0" data-purecounter-end="532" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Happy Users</p>
+                
+              </div>
+            </div><!-- End Stats Item -->
+  
+            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+              <i class="bi bi-journal-richtext"></i>
+              <div class="stats-item">
+                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Registered Users</p>
+               
+              </div>
+            </div><!-- End Stats Item -->
+  
+            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+              <i class="bi bi-headset"></i>
+              <div class="stats-item">
+                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Hours Of Support</p>
+               
+              </div>
+            </div><!-- End Stats Item -->
+  
+            <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+              <i class="bi bi-people"></i>
+              <div class="stats-item">
+                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+                <p>Doctors</p>
+                
+              </div>
+            </div><!-- End Stats Item -->
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /Stats Section -->
+       <!-- Services Start -->
+  <div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Our Details</h4>
+            <h1 class="display-5 mb-4">We Provide Best Results </h1>
+            <p class="mb-0">Our system integrates cutting-edge AI and machine learning techniques to predict heart disease risk based on ECG data.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="{%static 'image/img/close-up-doctors-hands-with-stethoscope-sheets-pills-wooden-background.jpg' %}" class="img-fluid rounded-top w-100" alt="Image">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4"> Heart Disease Prediction </a>
+                        <p class="mb-4">With a team of medical experts and data scientists,we ensure accurate and timely predictions,making early detection easier.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="/service">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="{%static 'image/img/doctors-working-together-medical-research.jpg' %}" class="img-fluid rounded-top w-100" alt="Image">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">Professional Support</a>
+                        <p class="mb-4"> Our system is designed to support healthcare professionals in identifying heart disease at the earliest stages.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="/service">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="{%static 'image/img/medical-banner-with-doctor-wearing-goggles (1).jpg' %}" class="img-fluid rounded-top w-100" alt="Image">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">AI-Model</a>
+                        <p class="mb-4">Our model uses deep learning to analyze the ECG signals and detect patterns that indicate potential heart problems.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="/service">Learn More</a>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- Services End -->
+
+
+      <!-- Abvout heart Start -->
+      <div class="container-fluid about py-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-xl-7 wow fadeInLeft" data-wow-delay="0.2s">
+                    <div>
+                        <h4 class="text-primary"> Heart Disease</h4>
+                        <h1 class="display-5 mb-4">Understanding Heart Disease: Causes, Risks, and Prevention</h1>
+                        <p class="mb-4">Heart disease encompasses various conditions affecting the heart and blood vessels, with risk factors like high blood pressure, poor diet, and smoking. Early detection through lifestyle changes and tools like AI prediction models can help prevent and manage these conditions.
+                        </p>
+                        <div class="row g-4">
+                       
+                            
+                            <div class="col-sm-6">
+                                <a href="/about" class="btn btn-primary rounded-pill py-3 px-5 flex-shrink-0">Discover Now</a>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 wow fadeInRight" data-wow-delay="0.2s">
+                    <div class="bg-primary rounded position-relative overflow-hidden">
+                        <img src="{%static 'image/img/medicine-student-doing-their-practice-hospital.jpg' %}" class="img-fluid rounded w-100" alt="">
+                        
+                      
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About heart End -->
+
+
+
+       <!-- Offer Start -->
+        <div class="container-fluid offer-section py-5">
+            <div class="container py-5">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                    <h4 class="text-primary">Our Heart</h4>
+                    <h1 class="display-5 mb-4">Heart Diseases</h1>
+                    <p class="mb-0">Heart disease refers to a range of conditions that affect the heart and blood vessels, and it remains one of the leading causes of death worldwide. The term "heart disease" typically encompasses several different types of cardiovascular diseases, including some of the following.
+                    </p>
+                </div>
+                <div class="row g-5 align-items-center">
+                    <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="nav nav-pills bg-light rounded p-5">
+                            <a class="accordion-link p-4 active mb-4" data-bs-toggle="pill" href="#collapseOne">
+                                <h5 class="mb-0">Coronary Artery Disease (CAD)</h5>
+                            </a>
+                            <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseTwo">
+                                <h5 class="mb-0">Heart Attack (Myocardial Infarction)</h5>
+                            </a>
+                            <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseThree">
+                                <h5 class="mb-0">Congenital Heart Defects</h5>
+                            </a>
+                            <a class="accordion-link p-4 mb-0" data-bs-toggle="pill" href="#collapseFour">
+                                <h5 class="mb-0">Arrhythmia</h5>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.4s">
+                        <div class="tab-content">
+                            <div id="collapseOne" class="tab-pane fade show p-0 active">
+                                <div class="row g-4">
+                                    <div class="col-md-7">
+                                        <img src="{%static 'image/img/physician-explaining-cardiology-diagnosis-with-image-heart-organ-tablet-patient-general-practitioner-showing-illustration-cardiovascular-system-anatomical-structure-man.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h1 class="display-5 mb-4">CAD</h1>
+                                        <p class="mb-4">This is the most common type of heart disease, caused by the build-up of plaque in the arteries that supply blood to the heart. This plaque can restrict blood flow and lead to chest pain (angina) or heart attacks.
+                                        </p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapseTwo" class="tab-pane fade show p-0">
+                                <div class="row g-4">
+                                    <div class="col-md-7">
+                                        <img src="{%static 'image/img/surgeon-posing-with-heart.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h1 class="display-5 mb-4">Heart Attack </h1>
+                                        <p class="mb-4">A heart attack occurs when the blood flow to a part of the heart muscle is blocked, usually due to a blood clot in a coronary artery. This blockage can cause permanent damage to the heart muscle.
+                                        </p>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapseThree" class="tab-pane fade show p-0">
+                                <div class="row g-4">
+                                    <div class="col-md-7">
+                                        <img src="{%static 'image/img/male-student-practicing-medicine.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h1 class="display-5 mb-4">Congenital Heart Defects</h1>
+                                        <p class="mb-4">Some people are born with structural heart problems, such as holes in the heart or abnormal heart valves, which may require medical intervention.
+                                        </p>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapseFour" class="tab-pane fade show p-0">
+                                <div class="row g-4">
+                                    <div class="col-md-7">
+                                        <img src="{%static 'image/img/female-student-medicine-wearing-medical-mask.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h1 class="display-5 mb-4">Arrhythmia</h1>
+                                        <p class="mb-4">Arrhythmias are irregular heartbeats that can occur when the heart's electrical system is not functioning properly. This can cause the heart to beat too quickly, too slowly, or erratically.
+                                        </p>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Offer End -->
+      
+    
+      
+        
+
+        <!-- Blog Start -->
+        <div class="container-fluid blog pb-5">
+            <div class="container pb-5">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                    <h4 class="text-primary">Our Blog </h4>
+                    <h1 class="display-5 mb-4">AI Prediction Graphs</h1>
+                    <p class="mb-0">Precision, model loss, and accuracy are key metrics for evaluating a model's performance.</p>
+                </div>
+                <div class="owl-carousel blog-carousel wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="blog-item p-4">
+                        <div class="blog-img mb-4">
+                            <img src="{%static 'image/img/precision.jpg'%}" class="img-fluid w-100 rounded" alt="">
+                            
+                        </div>
+                        <a href="#" class="h4 d-inline-block mb-3">Precision</a>
+                        <p class="mb-4">Precision refers to the proportion of positive predictions that were actually correct.
+                        </p>
+                        
+                    </div>
+                    <div class="blog-item p-4">
+                        <div class="blog-img mb-4">
+                            <img src="{%static 'image/img/lossandmodal.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            
+                        </div>
+                        <a href="#" class="h4 d-inline-block mb-3">Loss and Accuracy</a>
+                        <p class="mb-4"> 'Loss' measures prediction error, while 'accuracy' measures correct predictions.
+                        </p>
+                        
+                    </div>
+                    <div class="blog-item p-4">
+                        <div class="blog-img mb-4">
+                            <img src="{%static 'image/img/lossanjpg.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                           
+                        </div>
+                        <a href="#" class="h4 d-inline-block mb-3">Model loss</a>
+                        <p class="mb-4">Model Loss represents the error or difference between the predicted values and the actual values.
+                        </p>
+                        
+                    </div>
+                    <div class="blog-item p-4">
+                        <div class="blog-img mb-4">
+                            <img src="{%static 'image/img/modal.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                           
+                        </div>
+                        <a href="#" class="h4 d-inline-block mb-3">Model Accuracy</a>
+                        <p class="mb-4"> Accuracy is the percentage of correct predictions made by the model out of all predictions.
+                        </p>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Blog End -->
+
+
+        <!-- FAQs Start -->
+        <div class="container-fluid faq-section pb-5">
+            <div class="container pb-5 overflow-hidden">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                    <h4 class="text-primary">FAQs</h4>
+                    <h1 class="display-5 mb-4">Frequently Asked Questions</h1>
+                    <p class="mb-0"> Here are some common questions people have about our heart disease prediction platform. If you have any other questions or need further assistance, feel free to reach out to us!
+                    </p>
+                </div>
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                        <div class="accordion accordion-flush bg-light rounded p-5" id="accordionFlushSection">
+                            <div class="accordion-item rounded-top">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        How does the heart disease prediction model work?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">Our model uses advanced machine learning, specifically Convolutional Neural Networks (CNNs), to analyze ECG data. It detects patterns that may indicate potential heart conditions, including the risk of heart attacks, providing an early warning for patients and healthcare providers.
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        What if I don’t understand the results?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">No problem! Our platform provides simple explanations alongside your results, and you can contact our support team for further guidance.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                        Can this tool diagnose all heart conditions?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">While our tool identifies key indicators of heart disease, it’s not a substitute for a full medical diagnosis. Consult your doctor for a comprehensive assessment.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                        Who can benefit from this tool?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">Individuals monitoring their heart health, doctors seeking AI-based insights, or researchers analyzing ECG trends can all benefit from this tool.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                        Is the prediction accurate?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">While the AI model has shown strong accuracy in predicting heart disease based on ECG signals, it is designed to be a supplementary tool. We recommend consulting with a healthcare professional for a comprehensive diagnosis.
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item rounded-bottom">
+                                <h2 class="accordion-header" id="flush-headingSix">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                        Can this tool replace a doctor’s consultation?
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushSection">
+                                    <div class="accordion-body">No, the tool is not a replacement for professional medical advice. It serves as an early detection tool to help guide decisions, but a full diagnosis and treatment plan should always be provided by a healthcare professional.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                        <div class="bg-primary rounded">
+                            <img src="{%static 'image/img/faq.jpg' %}" class="img-fluid w-100" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FAQs End -->
+
+        <!-- Team End -->
+
+        <!-- Testimonial Start -->
+        <div class="container-fluid testimonial pb-5">
+            <div class="container pb-5">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                    <h4 class="text-primary">Testimonial</h4>
+                    <h1 class="display-5 mb-4">Our Clients Riviews</h1>
+                    <p class="mb-0">Hear from our users and experts about how our heart disease prediction platform is making a difference. From healthcare professionals to patients, their experiences showcase the impact of combining AI with cardiac care.
+                    </p>
+                </div>
+                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote-left">
+                            <i class="fas fa-quote-left fa-2x"></i>
+                        </div>
+                        <div class="testimonial-img">
+                            <img src="{%static 'image/img/testimonial-1.jpg' %}" class="img-fluid" alt="Image">
+                        </div>
+                        <div class="testimonial-text">
+                            <p class="mb-0">"I used this tool after experiencing mild chest pain and was amazed at how quickly it provided a preliminary analysis. It encouraged me to consult a doctor, and I’m glad I did—it might have saved my life."
+                            </p>
+                        </div>
+                        <div class="testimonial-title">
+                            <div>
+                                <h4 class="mb-0"> Sarah Davis</h4>
+                                <p class="mb-0"> Patient</p>
+                            </div>
+                            <div class="d-flex text-primary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-quote-right">
+                            <i class="fas fa-quote-right fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote-left">
+                            <i class="fas fa-quote-left fa-2x"></i>
+                        </div>
+                        <div class="testimonial-img">
+                            <img src="{%static 'image/img/testimonial-2.jpg' %}" class="img-fluid" alt="Image">
+                        </div>
+                        <div class="testimonial-text">
+                            <p class="mb-0">"This web application makes it easier to identify high-risk patients early. The AI predictions are remarkably accurate and help in decision-making, especially in busy clinics."</p>
+                        </div>
+                        <div class="testimonial-title">
+                            <div>
+                                <h4 class="mb-0">Nurse Emily Roberts</h4>
+                                <p class="mb-0">Nurse </p>
+                            </div>
+                            <div class="d-flex text-primary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-quote-right">
+                            <i class="fas fa-quote-right fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote-left">
+                            <i class="fas fa-quote-left fa-2x"></i>
+                        </div>
+                        <div class="testimonial-img">
+                            <img src="{%static 'image/img/testimonial-3.jpg' %}" class="img-fluid" alt="Image">
+                        </div>
+                        <div class="testimonial-text">
+                            <p class="mb-0">"As a cardiologist, I am impressed by how this platform combines AI with ECG analysis to support heart disease prediction. It offers a valuable tool for early detection, which is critical for saving lives. This technology has the potential to revolutionize cardiac care."
+                            </p>
+                        </div>
+                        <div class="testimonial-title">
+                            <div>
+                                <h4 class="mb-0">Dr. John Thompson</h4>
+                                <p class="mb-0"> Cardiologist</p>
+                            </div>
+                            <div class="d-flex text-primary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-quote-right">
+                            <i class="fas fa-quote-right fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote-left">
+                            <i class="fas fa-quote-left fa-2x"></i>
+                        </div>
+                        <div class="testimonial-img">
+                            <img src="{%static 'image/img/testimonial-2.jpg' %}" class="img-fluid" alt="Image">
+                        </div>
+                        <div class="testimonial-text">
+                            <p class="mb-0">"The use of Convolutional Neural Networks for ECG analysis in this project is highly innovative. It’s exciting to see AI applied to such a critical area of healthcare with meaningful results."
+                            </p>
+                        </div>
+                        <div class="testimonial-title">
+                            <div>
+                                <h4 class="mb-0">Alexa Martin</h4>
+                                <p class="mb-0"> AI Researcher</p>
+                            </div>
+                            <div class="d-flex text-primary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-quote-right">
+                            <i class="fas fa-quote-right fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+
+        <!-- Footer Start -->
+        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+            <div class="container py-5 border-start-0 border-end-0" style="border: 1px solid; border-color: rgb(255, 255, 255, 0.08);">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-6 col-xl-4">
+                        <div class="footer-item">
+                            <a href="/index" class="p-0">
+                                <h1 class="text-primary"><img src="{%static 'image/img/logo copy.png' %}" alt="Logo"> HDD.</h1>
+                                <!-- <img src="img/logo.png" alt="Logo"> -->
+                            </a>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-2">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Quick Links</h4>
+                            <a href="{% url "about" %}"><i class="fas fa-angle-right me-2"></i> About Us</a>
+                            <a href="/"><i class="fas fa-angle-right me-2"></i> Home</a>
+                            <a href="{% url "ai" %}"><i class="fas fa-angle-right me-2"></i> AI-Prediction</a>
+                            <a href="{% url "service" %}"><i class="fas fa-angle-right me-2"></i> Services</a>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Support</h4>
+                            <a href="/contact"><i class="fas fa-angle-right me-2"></i>Contact us</a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Contact Info</h4>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                                <p class="text-white mb-0">Sheikhupura Punjab.Pakistan</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope text-primary me-3"></i>
+                                <p class="text-white mb-0">akram007esha@gmail.com</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-phone-alt text-primary me-3"></i>
+                                <p class="text-white mb-0">(+012) 3456 7890</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="fab fa-firefox-browser text-primary me-3"></i>
+                                <p class="text-white mb-0">HDDsite@ex.com</p>
+                            </div>
+                            <div class="d-flex">
+                              <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-0" href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright py-4">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    
+                    <div class="copyright">
+                <p>Copyright © 2024. All Rights Reserved</p>
+            </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'css/css/lib/wow/wow.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/lightbox/js/lightbox.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+
+
+        <!--  Javascript -->
+        <script src="{% static 'java/js/main.js' %}"></script>
+     {% block body %}
+            {% endblock body %}
+    </body>
+
+</html>

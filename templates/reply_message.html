@@ -1,0 +1,29 @@
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg rounded p-4">
+        <h2 class="text-center mb-4">Reply to {{ message.name }}</h2>
+
+        <div class="mb-3">
+            <strong>📌 Subject:</strong> <span class="text-muted">{{ message.subject }}</span>
+        </div>
+
+        <div class="mb-4">
+            <strong>📝 Message:</strong>
+            <p class="bg-light p-3 rounded">{{ message.message }}</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">✍️ Admin Reply</label>
+                {{ form.admin_reply }}
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">📩 Send Reply</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

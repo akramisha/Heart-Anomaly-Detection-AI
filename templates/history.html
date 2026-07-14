@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical ECG Data & Stats</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js for visualizing ECG trends -->
+
+     <link href="{% static 'css/css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/css/main.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Historical ECG Data & Stats</h1>
+
+    <!-- Stats Overview Section -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Avg. Heart Rate</div>
+                <div class="card-body">
+                    <h5 class="card-title">72 bpm</h5>
+                    <p class="card-text">Average heart rate based on last 30 ECG readings.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Max. Heart Rate</div>
+                <div class="card-body">
+                    <h5 class="card-title">125 bpm</h5>
+                    <p class="card-text">Maximum heart rate recorded in last 30 ECG readings.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Min. Heart Rate</div>
+                <div class="card-body">
+                    <h5 class="card-title">60 bpm</h5>
+                    <p class="card-text">Minimum heart rate recorded in last 30 ECG readings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ECG Trend Visualization -->
+    <h2 class="text-center mb-4">ECG Trend Over Time</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <canvas id="ecgChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Table of ECG Data -->
+    <h2 class="text-center mt-5 mb-4">ECG Data Table</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Heart Rate (bpm)</th>
+                <th>ECG Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2025-01-11 10:00</td>
+                <td>75</td>
+                <td>Normal</td>
+            </tr>
+            <tr>
+                <td>2025-01-11 10:30</td>
+                <td>80</td>
+                <td>Normal</td>
+            </tr>
+            <tr>
+                <td>2025-01-11 11:00</td>
+                <td>72</td>
+                <td>Normal</td>
+            </tr>
+            <tr>
+                <td>2025-01-11 11:30</td>
+                <td>90</td>
+                <td>Normal</td>
+            </tr>
+            <!-- Additional rows of ECG data can be added here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap and Chart.js Scripts -->
+<script>
+    // Sample ECG data for the chart (time series of heart rates)
+    const labels = ['2025-01-11 10:00', '2025-01-11 10:30', '2025-01-11 11:00', '2025-01-11 11:30'];
+    const data = [75, 80, 72, 90]; // Corresponding heart rates
+
+    const ctx = document.getElementById('ecgChart').getContext('2d');
+    const ecgChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Heart Rate (bpm)',
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Heart Rate (bpm)'
+                    },
+                    min: 50,
+                    max: 120
+                }
+            }
+        }
+    });
+</script>
+  <script src="{% static 'java/js/main.js' %}"></script>
+</body>
+</html>

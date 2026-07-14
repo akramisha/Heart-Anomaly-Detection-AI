@@ -1,0 +1,500 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="{% static 'css/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/css/style.css' %}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 280px;
+            background-color: #1acc8d;
+            color: white;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+        .user-profile-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .default-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: #666;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .user-info p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .nav-menu {
+            flex-grow: 1;
+            padding: 20px 0;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: #ffffff1a;
+        }
+        .nav-item i {
+            margin-right: 12px;
+            width: 20px;
+        }
+        .footer-info {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f0f0f0;
+        }
+        .page-header {
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 32px;
+            color: #1acc8d;
+            margin-bottom: 8px;
+        }
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        .history-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .history-table th, .history-table td {
+            border: 1px solid #eee;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .history-table th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+            color: #333;
+        }
+        .history-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .history-table tr:hover {
+            background-color: #f0f0f0;
+        }
+        .history-table .action-buttons a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #1acc8d;
+        }
+        .history-table .action-buttons a:hover {
+            text-decoration: underline;
+        }
+        .no-predictions {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.1em;
+        }
+        /* Filter Section Container */
+.filter-section-container {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 2rem;
+  margin-top: 2rem; /* Space above this container */
+  margin-bottom: 2rem; /* Space below this container */
+  display: flex;
+  flex-wrap: nowrap; /* Forces items into a single row on larger screens */
+  justify-content: space-between; /* Distribute items with space between them */
+  align-items: flex-end; /* Align items to the bottom (labels and inputs) */
+  gap: 1rem; /* Consistent gap between elements */
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Allow groups to grow and shrink evenly */
+  min-width: 180px; /* Minimum width before allowing to wrap (handled by media query) */
+}
+
+.filter-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.filter-group input[type="text"],
+.filter-group input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+  background-color: #f8f8f8;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.filter-group input[type="text"]::placeholder,
+.filter-group input[type="date"]::placeholder {
+  color: #aaa;
+}
+
+.filter-group input[type="text"]:focus,
+.filter-group input[type="date"]:focus {
+  outline: none;
+  border-color: #1acc8d;
+  box-shadow: 0 0 0 2px rgba(26, 204, 141, 0.2);
+}
+
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-input-wrapper input[type="date"] {
+  padding-right: 2.5rem;
+}
+
+.date-input-wrapper .input-icon {
+  position: absolute;
+  right: 1rem;
+  color: #777;
+  pointer-events: none;
+}
+
+.filter-btn {
+  background-color: #fff;
+  color: #1acc8d;
+  border: 1px solid #1acc8d;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  align-self: flex-end;
+  flex-shrink: 0; /* Prevent shrinking */
+  min-width: 120px; /* Ensure button has sufficient width */
+}
+
+.filter-btn:hover {
+  background-color: #1acc8d;
+  color: #fff;
+}
+
+/* Responsive adjustments for filter section */
+@media (max-width: 992px) {
+  .filter-section-container {
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: flex-start; /* Align to start when wrapped */
+    gap: 1rem; /* Adjust gap for smaller screens */
+  }
+  .filter-group {
+    flex: 1 1 calc(50% - 0.5rem); /* Two columns on medium screens */
+    min-width: unset; /* Allow more flexibility */
+  }
+  .filter-btn {
+    flex: 1 1 100%; /* Button takes full width when wrapped */
+    min-width: unset;
+  }
+}
+
+@media (max-width: 576px) {
+  .filter-section-container {
+    flex-direction: column; /* Stack all items vertically on small screens */
+    align-items: stretch;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .filter-group {
+    flex: 0 0 auto; /* Reset flex for full stacking */
+    width: 100%;
+  }
+  .filter-btn {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="sidebar">
+        <div class="user-profile-section">
+            <div class="user-profile">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="user-avatar">
+                {% else %}
+                    <div class="default-avatar">{{ user.username|first|upper }}</div>
+                {% endif %}
+                <div class="user-info">
+                    <h3>{{ user.username }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="{% url 'profile' %}" class="nav-item">
+                <i class="fas fa-user"></i> 
+                My Profile
+            </a>
+            <a href="{% url 'edit_profile' %}" class="nav-item">
+                <i class="fas fa-edit"></i> 
+                Edit Profile
+            </a>
+            <a href="{% url 'change_password' %}" class="nav-item">
+                <i class="fas fa-key"></i> 
+                Change Password
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item">
+                <i class="fa fa-sign-out"></i>
+                logout
+            </a>
+            <a href="{% url 'ai' %}" class="nav-item">
+                <i class="fas fa-brain"></i> 
+                AI Prediction
+            </a>
+            <a href="{% url 'prediction_history' %}" class="nav-item active">
+                <i class="fas fa-history"></i> 
+                Prediction History
+            </a>
+            <a href="{% url 'index' %}" class="nav-item">
+                <i class="fas fa-home"></i> 
+                Home
+            </a>
+        </nav>
+        
+        <div class="footer-info">
+            © 2024 Profile System
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Prediction History</h1>
+            <p>View all your past heart disease predictions</p>
+        </div>
+
+        <div class="container filter-section-container wow fadeInUp" data-wow-delay="0.2s">
+            <div class="filter-group">
+                <label for="searchLabel">Search by Label</label>
+                <input type="text" id="searchLabel" placeholder="e.g. Normal, Abnormal">
+            </div>
+            <div class="filter-group">
+                <label for="dateFrom">Date From</label>
+                <div class="date-input-wrapper">
+                    <input type="date" id="dateFrom" placeholder="mm/dd/yyyy">
+                    <i class="bi bi-calendar input-icon"></i>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label for="dateTo">Date To</label>
+                <div class="date-input-wrapper">
+                    <input type="date" id="dateTo" placeholder="mm/dd/yyyy">
+                    <i class="bi bi-calendar input-icon"></i>
+                </div>
+            </div>
+            <button type="button" class="filter-btn" id="filterButton">Filter</button>
+        </div>
+        <div class="history-card">
+            {% if predictions %}
+            <table class="history-table" id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Predicted Condition</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in predictions %}
+                    <tr>
+                        <td data-date="{{ prediction.prediction_date|date:"Y-m-d" }}">{{ prediction.prediction_date|date:"Y-m-d H:i" }}</td>
+                        <td data-label="{{ prediction.predicted_label }}">{{ prediction.predicted_label }}</td>
+                        <td>
+                            {% if prediction.uploaded_image %}
+                                <img src="{{ prediction.uploaded_image.url }}" alt="ECG Image" style="width: 80px; height: auto; border-radius: 5px;">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td class="action-buttons">
+                            <a href="{% url 'generate_report' prediction.id %}">Download Report</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="no-predictions">
+                <p>No predictions found yet. Upload an ECG image on the AI Prediction page to get started!</p>
+                <a href="{% url 'ai' %}" class="btn btn-primary mt-3">Go to AI Prediction</a>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    {% else %}
+    <div style="padding: 20px; text-align: center;">
+        <p>You are not logged in. Please <a href="{% url 'login' %}">login</a> to view your prediction history.</p>
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchLabelInput = document.getElementById('searchLabel');
+            const dateFromInput = document.getElementById('dateFrom');
+            const dateToInput = document.getElementById('dateTo');
+            const filterButton = document.getElementById('filterButton');
+            const historyTableBody = document.querySelector('#historyTable tbody');
+            const noPredictionsDiv = document.querySelector('.no-predictions'); // Get the no-predictions div
+
+            function applyFilter() {
+                const searchLabel = searchLabelInput.value.toLowerCase().trim();
+                const dateFrom = dateFromInput.value; // YYYY-MM-DD format
+                const dateTo = dateToInput.value;     // YYYY-MM-DD format
+
+                let anyFilterActive = searchLabel || dateFrom || dateTo;
+
+                if (historyTableBody) {
+                    const rows = historyTableBody.querySelectorAll('tr');
+                    let visibleRowCount = 0;
+
+                    rows.forEach(row => {
+                        const rowLabel = row.querySelector('td[data-label]').dataset.label.toLowerCase();
+                        const rowDate = row.querySelector('td[data-date]').dataset.date; // YYYY-MM-DD
+
+                        let isVisible = true;
+
+                        // Filter by label
+                        if (searchLabel && !rowLabel.includes(searchLabel)) {
+                            isVisible = false;
+                        }
+
+                        // Filter by date from
+                        if (dateFrom && rowDate < dateFrom) {
+                            isVisible = false;
+                        }
+
+                        // Filter by date to
+                        if (dateTo && rowDate > dateTo) {
+                            isVisible = false;
+                        }
+
+                        row.style.display = isVisible ? '' : 'none';
+                        if (isVisible) {
+                            visibleRowCount++;
+                        }
+                    });
+
+                    // Show/hide "No predictions found" message based on visible rows
+                    if (noPredictionsDiv) {
+                        if (visibleRowCount === 0 && historyTableBody.children.length > 0) {
+                            // Only show if there were predictions initially but none match filter
+                            noPredictionsDiv.style.display = 'block';
+                            noPredictionsDiv.innerHTML = '<p>No predictions match your current filter criteria.</p>';
+                        } else if (historyTableBody.children.length === 0) {
+                            // If there were no predictions to begin with
+                            noPredictionsDiv.style.display = 'block';
+                            noPredictionsDiv.innerHTML = '<p>No predictions found yet. Upload an ECG image on the AI Prediction page to get started!</p><a href="{% url 'ai' %}" class="btn btn-primary mt-3">Go to AI Prediction</a>';
+                        } else {
+                            noPredictionsDiv.style.display = 'none';
+                        }
+                    }
+                }
+
+                // Update button text
+                if (anyFilterActive) {
+                    filterButton.textContent = 'Clear Filter';
+                } else {
+                    filterButton.textContent = 'Filter';
+                }
+            }
+
+            filterButton.addEventListener('click', function() {
+                const searchLabel = searchLabelInput.value.toLowerCase().trim();
+                const dateFrom = dateFromInput.value;
+                const dateTo = dateToInput.value;
+
+                // If no filters are active, and button says "Clear Filter", clear inputs and re-apply
+                if (filterButton.textContent === 'Clear Filter' && !searchLabel && !dateFrom && !dateTo) {
+                    searchLabelInput.value = '';
+                    dateFromInput.value = '';
+                    dateToInput.value = '';
+                    applyFilter(); // Re-apply to show all
+                } else if (filterButton.textContent === 'Filter' && !searchLabel && !dateFrom && !dateTo) {
+                    // If button says "Filter" and inputs are empty, do nothing or show all
+                    applyFilter(); // This will ensure all are shown if no filters are set
+                } else {
+                    applyFilter(); // Apply filters normally
+                }
+            });
+
+            // Optional: Apply filter dynamically as user types/selects dates
+            searchLabelInput.addEventListener('input', applyFilter);
+            dateFromInput.addEventListener('change', applyFilter);
+            dateToInput.addEventListener('change', applyFilter);
+
+            // Initial filter application in case there are pre-filled values (unlikely for this case)
+            applyFilter();
+        });
+    </script>
+</body>
+</html>

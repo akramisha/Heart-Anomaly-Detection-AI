@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+*,*::before,*::after
+{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:'Inter',sans-serif;}
+    body
+    {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f5f7fa;
+    }
+    .container
+    {
+      background:#fff;
+      width:clamp(320px,90%,1100px);
+      display:flex;
+      border-radius:1rem;
+       min-height: 400px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    /* Left illustration */
+    .illustration
+    {
+      flex:1 1 45%;
+      background:url('/static/image/3737510.jpg') center/cover no-repeat;
+      position:relative;
+    }
+    
+    /* Right form */
+    .form-wrapper
+    {flex:1 1 55%;
+    padding:3rem 2.5rem;
+  }
+    h1
+    {font-size:1.8rem;
+      font-weight:600;
+      margin-bottom:1.5rem;
+      color:#1a212f;
+    }
+    form
+    {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1rem 1.5rem;
+    }
+    label
+    {font-size:.875rem;
+      margin-bottom:.25rem;
+      color:#4c5566;
+      display:block;
+    }
+    input,select
+    {
+      width:100%;
+      padding:.65rem .75rem;
+      border:1px solid #d0d5dd;
+      border-radius:.5rem;
+      font-size:.95rem;
+      color:#1a212f;
+      background:#fff;
+    }
+    input:focus,select:focus
+    {
+      outline:2px solid #1acc8d;
+      border-color:#1acc8d;
+    }
+    .full-span{
+      grid-column:1/-1;
+    }
+    .gender-group
+    {display:flex;
+      align-items:center;
+      gap:1rem;
+      color: #1acc8d;
+    }
+    .gender-group input
+    {
+      width:auto;
+      margin-right:.35rem;
+      color: #1acc8d;
+    }
+    .btn
+    {
+      grid-column:1/-1;
+      margin-top:1rem;
+      padding:.9rem;
+      border:none;
+      border-radius:2rem;
+      background:#1acc8d;
+      color:#fff;
+      font-size:1rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .25s;
+    }
+    .btn:hover
+    {
+      background:#1acc8d;
+    }
+    @media(max-width:768px){
+      .container{flex-direction:column;}
+      .illustration{height:220px;}
+    }
+
+  textarea {
+  height: 40px;
+  resize: vertical;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #d0d5dd;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-height: 100px;
+}
+
+ .password-group {
+    display: flex; /* Use flexbox to put children side-by-side */
+    gap: 1.5rem; /* Space between the two password input groups */
+    margin-bottom: 1.5rem; /* Space below the password group */
+}
+
+.password-group > div {
+    flex: 1; /* Each password field container takes equal space */
+}
+
+.create-account-link {
+  margin-top: 1.5rem; /* Space above this link */
+  font-size: 0.95rem;
+  text-align: center;
+}
+.create-account-link a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+.create-account-link a:hover {
+  text-decoration: underline;
+}
+
+
+        .message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+        }
+.forgot-password-link {
+  width: 100%;
+  text-align: right; /* Align to the right */
+  margin-top: -0.5rem; /* Pull it up slightly */
+  margin-bottom: 1rem; /* Space below it */
+}
+.forgot-password-link a {
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+.forgot-password-link a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                <div class="{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function() {
+                const messageContainer = document.querySelector('.message-container');
+                if (messageContainer) {
+                    messageContainer.style.display = 'none';
+                }
+            }, 3000); // 3000 milliseconds = 3 seconds
+        </script>
+    {% endif %}
+  <div class="container">
+    <div class="illustration">
+      <span class="overlay"></span>
+    </div>
+
+    <div class="form-wrapper">
+      <h1>Login</h1>
+      <br>
+    <form action="{% url 'login' %}" method="POST">
+             {% csrf_token %}
+                  
+                  {% if form.non_field_errors %}
+                  <div class="alert alert-danger">
+                      {% for error in form.non_field_errors %}
+                      {{ error }}
+                      {% endfor %}
+                  </div>
+                  {% endif %}
+                  
+                 <div class="form-group">
+      <label for="id_email">Email</label>
+      <input type="email" id="id_email" name="email" placeholder="Enter your email" required>
+  </div>
+
+                  
+                      <div class="form-group">
+          <label for="id_password">Password:</label>
+          <input type="password" id="id_password" name="password" required placeholder="Enter your password"> 
+          {% if password_error %}
+              <div class="error">{{ password_error }}</div>
+          {% endif %}
+      </div>
+       <button type="submit" class="btn">Login</button>
+        <!-- Terms and Conditions Checkbox -->
+<br>
+        <div class="forgot-password-link"><br>
+          <p><a href="/Forgotpass"  style="color:#1acc8d;text-decoration:none;font-weight:600;">Forget Password?</a></p>
+        </div>
+
+
+<p style="margin-top:1rem;font-size:.9rem;text-align:center;">New here? <a href="{% url "register" %}" style="color:#1acc8d;text-decoration:none;font-weight:600;">Create an Account</a></p>
+      </form>
+     
+    </div>
+  </div>
+
+</body>
+</html>

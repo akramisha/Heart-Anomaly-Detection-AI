@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>HDD.</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"> 
+               <link href="{% static 'css/css/bootstrap.min.css' %}" rel="stylesheet">
+       
+    </head>
+        <body>
+            <div class="card text-center mx-auto " style="width: 300px; padding: 20px; margin-top: 60px;">
+ 
+    <div class="card-header h5 text-white bg-primary">Password Reset</div>
+    <div class="card-body px-5">
+        <p class="card-text py-2"style="color: black;">
+            Enter your email address and we'll send you an email with instructions to reset your password.
+        </p>
+        <div data-mdb-input-init class="form-outline">
+            <input type="email" id="typeEmail" class="form-control my-3" style="color: black;"/>
+            <label class="form-label" for="typeEmail" style="color: black;">Email input</label>
+        </div>
+        <a href="#" data-mdb-ripple-init class="btn btn-primary w-100">Reset password</a>
+        <div class="d-flex justify-content-between mt-4">
+            <a class="" href="/login">Login</a>
+            <a class="" href="/Register">Register</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

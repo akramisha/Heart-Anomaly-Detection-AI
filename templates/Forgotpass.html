@@ -1,0 +1,321 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify yourself</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> {# Assuming register.css has general auth styles #}
+    <style>
+
+:root {
+  --primary-color: #1acc8d;
+  --primary-dark: #1acc8d;
+  --primary-light: #1acc8d;
+  --text-color: #333;
+  --bg-color: #f4f7f6;
+  --card-bg: #ffffff;
+  --header-bg: #ffffff;
+  --shadow-color: #1acc8d;
+  --border-color: #ddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header Styles */
+header {
+   background-color: #1acc8d; /* This is the purple color from your login.css */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo image and text */
+}
+
+.logo-img {
+    width: 40px; /* Adjust size as needed */
+    height: auto;
+}
+
+.logo {
+    font-size: 24px; /* Adjust font size */
+    font-weight: 500;
+    letter-spacing: 5px;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #fff; /* Example hover color */
+}
+
+/* Auth Section Styles */
+.auth-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px);
+  padding: 50px 0;
+}
+
+.auth-container {
+  background-color: var(--card-bg);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px var(--shadow-color);
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  margin: 0 auto;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.auth-header h2 span {
+  color: #1acc8d;
+}
+
+.auth-header p {
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+/* Form Styles */
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.input-with-icon {
+  position: relative;
+  display: flex; /* Ensure flexbox is used for alignment */
+  align-items: center;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-with-icon:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(122, 0, 108, 0.2);
+}
+
+.input-with-icon i {
+  padding: 12px 15px;
+  color: var(--primary-color);
+  font-size: 1.1em;
+  min-width: 50px;
+  text-align: center;
+  /* Ensure icon does not overlap input */
+  position: relative; /* Add position relative to ensure z-index works */
+  z-index: 1; /* Keep icon below input if input has higher z-index */
+}
+
+.input-with-icon input,
+.input-with-icon select,
+.input-with-icon textarea {
+  flex: 1; /* Allow input to grow and take available space */
+  border: none;
+  background: transparent;
+  padding: 12px 15px 12px 0; /* Adjust padding to avoid overlap with icon */
+  color: var(--text-color);
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  position: relative; /* Crucial: Make input positioned for z-index */
+  z-index: 2; /* Crucial: Ensure input is above the icon */
+}
+
+.input-with-icon select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%237a006c'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 1.2em;
+  cursor: pointer;
+}
+
+.input-with-icon input::placeholder,
+.input-with-icon textarea::placeholder {
+  color: rgba(51, 51, 51, 0.6);
+}
+
+/* Error Styles */
+.error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-error,
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+.auth-btn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.auth-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.auth-footer {
+  text-align: center;
+}
+
+.auth-footer a {
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+
+            <nav class="nav-links">
+                <a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Verify <span>Identity</span></h2>
+                    <p>Answer your secret question to proceed</p>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                
+
+               <form method="POST" class="auth-form">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="email" name="email" required />
+        </div>
+    </div>
+
+    {% if secret_question %}
+    <div class="secret-question-display">
+        {{ secret_question }}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="secret_answer">Your Answer</label>
+        <div class="input-with-icon">
+            <i class="fas fa-key"></i>
+            <input type="password" name="secret_answer" required />
+        </div>
+    </div>
+
+    <button type="submit" class="auth-btn">Verify & Reset</button>
+</form>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>

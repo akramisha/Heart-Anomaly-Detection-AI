@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>HDD.</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+      <!-- Libraries Stylesheet -->
+        <link href=" {% static 'css/css/lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href=" {% static 'css/css/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+        <link href=" {% static 'css/css/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!--  Stylesheet -->
+        <link href="{% static 'css/css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/css/main.css' %}" rel="stylesheet">
+        <style>
+            .result {
+                display: none; /* Initially hidden */
+                padding: 10px;
+                border-radius: 5px;
+                font-weight: bold;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .result.success {
+                background-color: #d4edda; /* Light green */
+                color: #155724; /* Dark green text */
+                border: 1px solid #c3e6cb; /* Green border */
+            }
+
+            .result.error {
+               background-color: #f8d7da !important; /* Light red */
+                color: #721c24 !important; /* Dark red */
+                border: 1px solid #f5c6cb !important;
+            }
+            .report-button {
+                display: none; /* Hidden until prediction is successful */
+                margin-left: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Topbar Start -->
+        <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
+            <div class="row gx-0 align-items-center">
+                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                    <div class="d-flex flex-wrap">
+                        <a href="https://www.google.com/maps/search/heart+specialist+near+me/" target="_blank" class="text-muted small me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                        <a href="tel:+01234567890" class="text-muted small me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                        <a href="mailto:example@gmail.com" class="text-muted small me-0"><i class="fas fa-envelope text-primary me-2"></i>HDD@gmail.com</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                         {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle text-dark" data-bs-toggle="dropdown"><small><i class="fa fa-home text-primary me-2"></i> My Dashboard</small></a>
+                            <div class="dropdown">
+{% else %}
+                                <a href="/register"><small class="me-3 text-dark"><i class="fa fa-user text-primary me-2"></i>Register</small></a>
+                        <a href="/login"><small class="me-3 text-dark"><i class="fa fa-sign-in-alt text-primary me-2"></i>Login</small></a>
+                        {% endif %} 
+<!--    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--        Menu-->
+<!--    </button>-->
+    <ul class="dropdown-menu rounded" aria-labelledby="dropdownMenuButton">
+        <li><a href="{% url 'profile' %}" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> My Profile</a></li>
+
+
+    </ul>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar End -->
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="text-primary"><img src="{%static 'image/img/logo copy HDD.png' %}" alt="Logo"> HDD.</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <a href="/about" class="nav-item nav-link">About</a>
+                        <a href="/service" class="nav-item nav-link">Services</a>
+                        <a href="/ai" class="nav-item nav-link active">AI-Prediction</a>
+
+
+                        <a href="/contact" class="nav-item nav-link">Contact Us</a>
+                    </div>
+                    <a href="/ai" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">Get Started</a>
+                </div>
+            </nav>
+ <div class="header-carousel owl-carousel">
+
+                <div class="header-carousel-item">
+                    <img src="{% static 'image/doctor.jpg' %}" class="img-fluid w-100" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="container">
+                            <div class="row g-5">
+                                <div class="col-12 animated fadeInUp">
+                                    <div class="text-center">
+
+                                         <div class="container-fluid">
+                <div class="container text-center py-5" style="max-width: 900px;">
+                    <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Our Prediction</h4>
+                    <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                        <li class="breadcrumb-item"><a href="/"  style="color: white;">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#"  style="color: white;">Pages</a></li>
+                        <li class="breadcrumb-item active text-primary">Prediction</li>
+                    </ol>
+                </div>
+            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel End -->
+
+            <!-- Header Start -->
+
+            <!-- Header End -->
+        </div>
+        <!-- Navbar & Hero End -->
+ <!-- Offer Start -->
+ <div class="container-fluid offer-section py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Our Heart</h4>
+            <h1 class="display-5 mb-4">Heart Diseases</h1>
+            <p class="mb-0">Heart disease refers to a range of conditions that affect the heart and blood vessels, and it remains one of the leading causes of death worldwide. The term "heart disease" typically encompasses several different types of cardiovascular diseases, including some of the following.
+            </p>
+        </div>
+        <div class="row g-5 align-items-center">
+            <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
+                <div class="nav nav-pills bg-light rounded p-5">
+                    <a class="accordion-link p-4 active mb-4" data-bs-toggle="pill" href="#collapseOne">
+                        <h5 class="mb-0">Coronary Artery Disease (CAD)</h5>
+                    </a>
+                    <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseTwo">
+                        <h5 class="mb-0">Heart Attack (Myocardial Infarction)</h5>
+                    </a>
+                    <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseThree">
+                        <h5 class="mb-0">Congenital Heart Defects</h5>
+                    </a>
+                    <a class="accordion-link p-4 mb-0" data-bs-toggle="pill" href="#collapseFour">
+                        <h5 class="mb-0">Arrhythmia</h5>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.4s">
+                <div class="tab-content">
+                    <div id="collapseOne" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <img src="{%static 'image/img/physician-explaining-cardiology-diagnosis-with-image-heart-organ-tablet-patient-general-practitioner-showing-illustration-cardiovascular-system-anatomical-structure-man.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            </div>
+                            <div class="col-md-5">
+                                <h1 class="display-5 mb-4">CAD</h1>
+                                <p class="mb-4">This is the most common type of heart disease, caused by the build-up of plaque in the arteries that supply blood to the heart. This plaque can restrict blood flow and lead to chest pain (angina) or heart attacks.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapseTwo" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <img src="{%static 'image/img/surgeon-posing-with-heart.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            </div>
+                            <div class="col-md-5">
+                                <h1 class="display-5 mb-4">Heart Attack </h1>
+                                <p class="mb-4">A heart attack occurs when the blood flow to a part of the heart muscle is blocked, usually due to a blood clot in a coronary artery. This blockage can cause permanent damage to the heart muscle.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <img src="{%static 'image/img/male-student-practicing-medicine.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            </div>
+                            <div class="col-md-5">
+                                <h1 class="display-5 mb-4">Congenital Heart Defects</h1>
+                                <p class="mb-4">Some people are born with structural heart problems, such as holes in the heart or abnormal heart valves, which may require medical intervention.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapseFour" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            <div class="col-md-7">
+                                <img src="{%static 'image/img/female-student-medicine-wearing-medical-mask.jpg' %}" class="img-fluid w-100 rounded" alt="">
+                            </div>
+                            <div class="col-md-5">
+                                <h1 class="display-5 mb-4">Arrhythmia</h1>
+                                <p class="mb-4">Arrhythmias are irregular heartbeats that can occur when the heart's electrical system is not functioning properly. This can cause the heart to beat too quickly, too slowly, or erratically.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offer End -->
+
+
+
+
+        <section id="ai-prediction" class="py-5" >
+            <!-- Section Title -->
+            <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <div class="container section-title" data-aos="fade-up">
+              <h2>Prediction</h2>
+              <div><span>Check Our</span> <span class="description-title">AI-Box</span></div>
+            </div><!-- End Section Title -->
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="container text-center">
+              <h2 class="mb-4">AI Prediction - Upload Your Report</h2>
+              <p>Upload your ECG or health report for prediction analysis using AI.</p>
+              <div class="card shadow">
+                <div class="card-body">
+                  <h4 class="card-title">Upload Your Report</h4>
+                  <form id="uploadForm" enctype="multipart/form-data" method="post" action="{% url 'predict' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="fileUpload" class="form-label">Choose a file</label>
+                      <input type="file" class="form-control" id="fileUpload" name="file" required>
+                    </div>
+                    <button type="submit"  class="btn btn-primary">Predict</button>
+                    <button type="button" id="downloadReportBtn" class="btn btn-success report-button">Download Report</button>
+                    <a href="{% url 'prediction_history' %}" class="btn btn-info" style="margin-left: 10px;">View History</a>
+
+                  <div id="loader" style="display: none; text-align: center;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+
+                     </form>
+                    <br><br>
+                  <div class="result" id="result"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <script>
+              let lastPredictionId = null; // Variable to store the last prediction ID
+
+              document.getElementById('uploadForm').onsubmit = async function (e) {
+                e.preventDefault();
+
+                let resultDiv = document.getElementById('result');
+                let loader = document.getElementById('loader');
+                let downloadReportBtn = document.getElementById('downloadReportBtn');
+
+                // Show loader and hide result/report button initially
+                loader.style.display = "block";
+                resultDiv.style.display = "none";
+                downloadReportBtn.style.display = "none"; // Hide report button
+
+                const formData = new FormData(this);
+                try {
+                    const response = await fetch('{% url "predict" %}', { // Use Django URL tag
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value }
+                    });
+
+                    const data = await response.json();
+
+                    // Hide loader and show result
+                    loader.style.display = "none";
+                    resultDiv.style.display = "block";
+
+                    // Check if "predicted_class" exists (this means success)
+                    if (response.ok && data.predicted_class) { // Check response.ok as well
+                        resultDiv.classList.remove("error"); // Remove error styling
+                        resultDiv.classList.add("success");  // Add success styling
+                        resultDiv.innerText = `✅ Prediction: ${data.predicted_class}`;
+                        
+                        lastPredictionId = data.prediction_id; // Store the prediction ID
+                        downloadReportBtn.style.display = "inline-block"; // Show report button
+                    }
+                    // Otherwise, assume it's an error
+                    else {
+                       resultDiv.classList.remove("success"); // Remove success styling
+                       resultDiv.classList.add("error");  // Add error styling
+                       resultDiv.innerText = `❌ Error: ${data.error || "Something went wrong!"}`;
+                       lastPredictionId = null; // Clear prediction ID on error
+                    }
+                } catch (error) {
+                    console.error("Fetch error:", error); // Log the actual fetch error
+                    loader.style.display = "none";
+                    resultDiv.style.display = "block";
+                    // Remove success class (if previously set) and add error class
+                    resultDiv.classList.remove("success");
+                    resultDiv.classList.add("error");
+                    resultDiv.innerText = "Error: Unable to connect to the server.";
+                    lastPredictionId = null; // Clear prediction ID on error
+                }
+              };
+
+              // Event listener for the "Download Report" button
+              document.getElementById('downloadReportBtn').addEventListener('click', function() {
+                  if (lastPredictionId) {
+                      // Use Django URL tag for generate_report
+                      window.location.href = `{% url 'generate_report' 0 %}`.replace('0', lastPredictionId);
+                  } else {
+                      alert('Please make a prediction first to generate a report.');
+                  }
+              });
+            </script>
+
+               </section>
+
+
+        <!-- Footer Start -->
+       <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+            <div class="container py-5 border-start-0 border-end-0" style="border: 1px solid; border-color: rgb(255, 255, 255, 0.08);">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-6 col-xl-4">
+                        <div class="footer-item">
+                            <a href="/index" class="p-0">
+                                <h1 class="text-primary"><img src="{%static 'image/img/logo copy.png' %}" alt="Logo"> HDD.</h1>
+                                <!-- <img src="img/logo.png" alt="Logo"> -->
+                            </a>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-2">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Quick Links</h4>
+                            <a href="{% url "about" %}"><i class="fas fa-angle-right me-2"></i> About Us</a>
+                            <a href="/"><i class="fas fa-angle-right me-2"></i> Home</a>
+                            <a href="{% url "ai" %}"><i class="fas fa-angle-right me-2"></i> AI-Prediction</a>
+                            <a href="{% url "service" %}"><i class="fas fa-angle-right me-2"></i> Services</a>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Support</h4>
+                            <a href="/contact"><i class="fas fa-angle-right me-2"></i>Contact us</a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">Contact Info</h4>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                                <p class="text-white mb-0">Sheikhupura Punjab.Pakistan</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope text-primary me-3"></i>
+                                <p class="text-white mb-0">akram007esha@gmail.com</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-phone-alt text-primary me-3"></i>
+                                <p class="text-white mb-0">(+012) 3456 7890</p>
+                            </div>
+                            <div class="d-flex align-items-center mb-4">
+                                <i class="fab fa-firefox-browser text-primary me-3"></i>
+                                <p class="text-white mb-0">HDDsite@ex.com</p>
+                            </div>
+                            <div class="d-flex">
+                              <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram text-white"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-circle me-0" href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <!-- Copyright Start -->
+         <div class="container-fluid copyright py-4">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    
+                    <div class="copyright">
+                <p>Copyright © 2024. All Rights Reserved</p>
+            </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+
+         <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'css/css/lib/wow/wow.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/waypoints/waypoints.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/lightbox/js/lightbox.min.js' %}"></script>
+        <script src="{% static 'css/css/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+        <!--  Javascript -->
+        <script src="{% static 'java/js/main.js' %}"></script>
+
+    </body>
+
+</html>

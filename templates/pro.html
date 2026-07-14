@@ -1,0 +1,80 @@
+
+{% block content %}
+<div class="container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-picture">
+          <img id="profileImage"
+     src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}/static/default_profile.png{% endif %}"
+     alt="Profile Picture">
+
+        </div>
+        <div class="profile-info">
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p>@{{ user.username }}</p>
+            <p>Last seen: 2 hours ago</p>
+            <span class="badge">Administrator</span>
+            <p>Joined: {{ user.date_joined|date:"d M Y" }}</p>
+        </div>
+    </div>
+
+    <!-- User Details -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Profile Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>About:</strong> {{ profile.bio }}</p>
+
+            <h4>Preferences</h4>
+            <p>{% if profile.newsletter %}✔{% else %}✖{% endif %} Blog posts</p>
+            <p>{% if profile.blog_posts %}✔{% else %}✖{% endif %} Newsletter</p>
+            <p>{% if profile.personal_offers %}✔{% else %}✖{% endif %} Personal Offers</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-header {
+        display: flex;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+    }
+    .profile-picture img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 2px solid #007bff;
+    }
+    .profile-info {
+        margin-left: 20px;
+    }
+    .badge {
+        background: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+    .card {
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,388 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: #1acc8d;
+            color: white;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .user-profile-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .default-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: #666;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #ffffff1a;
+        }
+
+        .nav-item.active {
+            background-color:#ffffff1a;
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+            width: 20px;
+        }
+
+        .footer-info {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+            background-color: #f0f0f0;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: #1acc8d;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #1acc8d;
+        }
+
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+            border: 3px solid #1acc8d;
+        }
+
+        .default-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+            color: #666;
+            border: 3px solid #1acc8d;
+        }
+
+        .profile-basic-info h2 {
+            font-size: 24px;
+            color: #1acc8d;
+            margin-bottom: 5px;
+        }
+
+        .profile-basic-info .username {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .profile-basic-info .email {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: #4e003f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .edit-btn:hover {
+            background-color: #6a005f;
+        }
+
+        .profile-details {
+            display: grid;
+            gap: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            width: 150px;
+            font-weight: 600;
+            color: #666;
+            flex-shrink: 0;
+        }
+
+        .detail-value {
+            color: #333;
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-picture, .default-profile-picture {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .edit-btn {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="sidebar">
+        <div class="user-profile-section">
+            <div class="user-profile">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="user-avatar">
+                {% else %}
+                    <div class="default-avatar">{{ user.username|first|upper }}</div>
+                {% endif %}
+                <div class="user-info">
+                    <h3>{{ user.username }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+        
+       <nav class="nav-menu">
+            <a href="{% url 'profile' %}" class="nav-item active">
+                <i class="fas fa-user"></i> 
+                My Profile
+            </a>
+            <a href="{% url 'edit_profile' %}" class="nav-item">
+                <i class="fas fa-edit"></i> 
+                Edit Profile
+            </a>
+            <a href="{% url 'change_password' %}" class="nav-item">
+                <i class="fas fa-key"></i> 
+                Change Password
+            </a>
+            <a href="{% url 'logout' %}" class="nav-item">
+                <i class="fa fa-sign-out"></i>
+                logout
+            </a>
+             <a href="{% url 'ai' %}" class="nav-item">
+                <i class="fas fa-brain"></i> 
+                AI Prediction
+            </a>
+            <a href="{% url 'prediction_history' %}" class="nav-item ">
+                <i class="fas fa-history"></i> 
+                Prediction History
+            </a>
+            <a href="{% url 'index' %}" class="nav-item">
+                <i class="fas fa-home"></i> 
+                Home
+            </a>
+            
+        </nav>
+        
+        <div class="footer-info">
+            © 2024 Profile System
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>My Profile</h1>
+            <p>View and manage your personal information</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-header">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+                {% else %}
+                    <div class="default-profile-picture">{{ user.username|first|upper }}</div>
+                {% endif %}
+                <div class="profile-basic-info">
+                    <h2>{{ user.username }}</h2>
+                    <div class="username">@{{ user.username|lower }}</div>
+                    <div class="email">{{ user.email }}</div>
+                </div>
+                
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-row">
+                    <div class="detail-label">Username</div>
+                    <div class="detail-value">{{ user.get_username|default:"Not set" }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">{{ user.email }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Phone Number</div>
+                    <div class="detail-value">{{ user.profile.contact_number|default:"Not set" }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Gender</div>
+                    <div class="detail-value">{{ user.profile.get_gender_display|default:"Not set" }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Date of Birth</div>
+                    <div class="detail-value">{{ user.profile.birth_date|default:"Not set" }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Address</div>
+                    <div class="detail-value">{{ user.profile.location|default:"Not set" }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Education</div>
+                    <div class="detail-value">{{ user.profile.education|default:"Not set" }}</div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Bio</div>
+                    <div class="detail-value">{{ user.profile.bio|default:"Not set" }}</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% else %}
+    <div style="padding: 20px; text-align: center;">
+        <p>You are not logged in. Please <a href="{% url 'login' %}">login</a> to view your profile.</p>
+    </div>
+    {% endif %}
+</body>
+</html>

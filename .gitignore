@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+env/
+
+# Database
+db.sqlite3
+
+# Environment variables
+.env
+
+# ML Models
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.pt
+*.pth
+
+saved_model/
+weights/
+checkpoints/
+logs/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store

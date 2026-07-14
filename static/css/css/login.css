@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+  --accent-color: #1acc8d;
+  --base-color: white;
+  --text-color: #2e2b41;
+  --input-color: #f3f0ff;
+}
+* {
+  box-sizing: border-box; /* Ensure consistent box model */
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: Poppins, Segoe UI, sans-serif;
+  font-size: 12pt;
+  color: var(--text-color);
+  text-align: center;
+}
+body {
+  min-height: 100vh;
+  background-color: #f5f7fa; /* Light background for the whole page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container {
+  background: var(--base-color);
+  width: clamp(320px, 90%, 1100px); /* Responsive width */
+  display: flex;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  min-height: 600px; /* Ensure a minimum height for the container */
+}
+
+/* Left form wrapper */
+.form-wrapper {
+  flex: 1 1 55%; /* Takes 55% width on larger screens */
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  text-align: center;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 2rem; /* Space below the title */
+  color: var(--text-color);
+}
+form {
+  width: min(400px, 100%); /* Max width for the form */
+  margin-top: 0; /* Remove previous margin-top */
+  margin-bottom: 1.5rem; /* Space below the form */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* Space between form groups */
+}
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* Stack label and input vertically */
+  align-items: flex-start; /* Align label and input to the left */
+  gap: 0.5rem; /* Space between label and input */
+}
+
+label {
+  font-size: 0.95rem; /* Slightly larger label font */
+  color: #4c5566;
+  display: block;
+  text-align: left;
+  font-weight: 600; /* Make labels bold */
+}
+input {
+  width: 100%;
+  padding: 0.85rem 1rem; /* Increased padding for larger fields */
+  border: 1px solid #d0d5dd;
+  border-radius: 0.5rem;
+  font-size: 1rem; /* Larger font size for input text */
+  color: #1a212f;
+  background: #f8f9fa; /* Light background for fields */
+}
+input::placeholder {
+  color: #888; /* Placeholder color */
+}
+input:focus {
+  outline: 2px solid var(--accent-color);
+  border-color: var(--accent-color);
+  background: #fff; /* White background on focus */
+}
+
+.forgot-password-link {
+  width: 100%;
+  text-align: right; /* Align to the right */
+  margin-top: -0.5rem; /* Pull it up slightly */
+  margin-bottom: 1rem; /* Space below it */
+}
+.forgot-password-link a {
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+.forgot-password-link a:hover {
+  text-decoration: underline;
+}
+
+button[type="submit"] {
+  width: 100%; /* Full width button */
+  margin-top: 0.5rem; /* Space above button */
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 2rem; /* More rounded corners */
+  background: var(--accent-color);
+  color: var(--base-color);
+  font-size: 1.1rem; /* Larger font for button */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+button[type="submit"]:hover {
+  background: #15a070; /* Slightly darker green on hover */
+}
+button[type="submit"]:focus {
+  outline: none;
+  background: #15a070;
+}
+
+.create-account-link {
+  margin-top: 1.5rem; /* Space above this link */
+  font-size: 0.95rem;
+  text-align: center;
+}
+.create-account-link a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+.create-account-link a:hover {
+  text-decoration: underline;
+}
+
+/* Right illustration section */
+.illustration {
+  flex: 1 1 45%; /* Takes 45% width on larger screens */
+  background-color: #e0e6f6; /* Background color from screenshot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative; /* For positioning the image */
+}
+.illustration img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack sections vertically on smaller screens */
+    border-radius: 0; /* No border-radius on small screens */
+    box-shadow: none; /* No shadow on small screens */
+    min-height: 100vh; /* Full height on small screens */
+  }
+  .form-wrapper {
+    padding: 2rem 1.5rem;
+    flex: none; /* Remove flex basis */
+    width: 100%;
+  }
+  .illustration {
+    flex: none; /* Remove flex basis */
+    width: 100%;
+    height: 300px; /* Fixed height for illustration on small screens */
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  form {
+    gap: 1rem;
+  }
+  button[type="submit"] {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+/* Message container styles (already present, just ensuring they are here) */
+.message-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+}
